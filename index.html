@@ -5,78 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lost Order Cost Calculator</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2em;
-      background: #ffffff;
-      color: #333;
+    :root {
+      --primary: #00b5cc;
+      --accent: #f8971d;
+      --neutral: #7a7c7f;
+      --background: #ffffff;
     }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--background);
+      margin: 0;
+      padding: 2em;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: var(--background);
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #e0e0e0;
+    }
+
     h1 {
       text-align: center;
-      color: #00b5cc;
-    }
-    .slider-group {
+      color: var(--primary);
       margin-bottom: 1.5em;
-      border-bottom: 1px solid #7a7c7f;
-      padding-bottom: 1em;
+      font-size: 1.8em;
     }
+
+    .slider-group {
+      margin-bottom: 2em;
+    }
+
     label {
       display: block;
-      margin-bottom: 0.3em;
-      font-weight: bold;
-      color: #f8971d;
+      margin-bottom: 0.4em;
+      font-weight: 600;
+      color: var(--accent);
     }
+
     input[type="range"] {
       width: 100%;
-      accent-color: #00b5cc;
+      accent-color: var(--primary);
     }
+
     .value {
-      font-weight: bold;
+      font-weight: 600;
       margin-left: 0.5em;
-      color: #7a7c7f;
+      color: var(--neutral);
     }
+
     #result {
       font-size: 1.4em;
       margin-top: 2em;
       text-align: center;
-      background: #ffffff;
+      background: var(--background);
       padding: 1em;
-      border: 2px solid #00b5cc;
+      border: 2px solid var(--primary);
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      color: #00b5cc;
+      color: var(--primary);
     }
   </style>
 </head>
 <body>
-  <h1>Lost Order Cost Calculator</h1>
+  <div class="container">
+    <h1>Lost Order Cost Calculator</h1>
 
-  <div class="slider-group">
-    <label>Average Ticket Size ($): <span class="value" id="ticketVal">15</span></label>
-    <input type="range" id="ticket" min="1" max="100" value="15" />
+    <div class="slider-group">
+      <label>Average Ticket Size ($): <span class="value" id="ticketVal">15</span></label>
+      <input type="range" id="ticket" min="1" max="100" value="15" />
+    </div>
+
+    <div class="slider-group">
+      <label>Hourly Wage for Staff ($): <span class="value" id="wageVal">15</span></label>
+      <input type="range" id="wage" min="10" max="50" value="15" />
+    </div>
+
+    <div class="slider-group">
+      <label>Order Remake Time (minutes): <span class="value" id="remakeVal">5</span></label>
+      <input type="range" id="remake" min="1" max="30" value="5" />
+    </div>
+
+    <div class="slider-group">
+      <label>Lost Orders per Week: <span class="value" id="lostVal">21</span></label>
+      <input type="range" id="lost" min="0" max="350" value="21" />
+    </div>
+
+    <div class="slider-group">
+      <label>Number of Stores: <span class="value" id="storesVal">10</span></label>
+      <input type="range" id="stores" min="1" max="500" value="10" />
+    </div>
+
+    <div id="result">Annual Cost of Lost Orders: <span id="cost">$0.00</span></div>
   </div>
-
-  <div class="slider-group">
-    <label>Hourly Wage for Staff ($): <span class="value" id="wageVal">15</span></label>
-    <input type="range" id="wage" min="10" max="50" value="15" />
-  </div>
-
-  <div class="slider-group">
-    <label>Order Remake Time (minutes): <span class="value" id="remakeVal">5</span></label>
-    <input type="range" id="remake" min="1" max="30" value="5" />
-  </div>
-
-  <div class="slider-group">
-    <label>Lost Orders per Week: <span class="value" id="lostVal">21</span></label>
-    <input type="range" id="lost" min="0" max="350" value="21" />
-  </div>
-
-  <div class="slider-group">
-    <label>Number of Stores: <span class="value" id="storesVal">10</span></label>
-    <input type="range" id="stores" min="1" max="500" value="10" />
-  </div>
-
-  <div id="result">Annual Cost of Lost Orders: <span id="cost">$0.00</span></div>
 
   <script>
     const inputs = ['ticket', 'wage', 'remake', 'lost', 'stores'];
