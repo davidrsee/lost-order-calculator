@@ -9,33 +9,42 @@
       font-family: Arial, sans-serif;
       margin: 2em;
       background: #ffffff;
+      color: #333;
     }
     h1 {
       text-align: center;
+      color: #00b5cc;
     }
     .slider-group {
       margin-bottom: 1.5em;
+      border-bottom: 1px solid #7a7c7f;
+      padding-bottom: 1em;
     }
     label {
       display: block;
       margin-bottom: 0.3em;
       font-weight: bold;
+      color: #f8971d;
     }
     input[type="range"] {
       width: 100%;
+      accent-color: #00b5cc;
     }
     .value {
       font-weight: bold;
       margin-left: 0.5em;
+      color: #7a7c7f;
     }
     #result {
-      font-size: 1.2em;
+      font-size: 1.4em;
       margin-top: 2em;
       text-align: center;
-      background: #fff;
+      background: #ffffff;
       padding: 1em;
+      border: 2px solid #00b5cc;
       border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      color: #00b5cc;
     }
   </style>
 </head>
@@ -58,8 +67,8 @@
   </div>
 
   <div class="slider-group">
-    <label>Lost Orders per Day: <span class="value" id="lostVal">3</span></label>
-    <input type="range" id="lost" min="0" max="50" value="3" />
+    <label>Lost Orders per Week: <span class="value" id="lostVal">21</span></label>
+    <input type="range" id="lost" min="0" max="350" value="21" />
   </div>
 
   <div class="slider-group">
@@ -75,7 +84,7 @@
       ticket: 15,
       wage: 15,
       remake: 5,
-      lost: 3,
+      lost: 21,
       stores: 10
     };
 
@@ -89,8 +98,8 @@
 
     function calculateCost() {
       const remakeCost = (values.wage / 60) * values.remake;
-      const dailyLoss = (values.ticket + remakeCost) * values.lost;
-      const annualLoss = dailyLoss * 365 * values.stores;
+      const weeklyLoss = (values.ticket + remakeCost) * values.lost;
+      const annualLoss = weeklyLoss * 52 * values.stores;
       const formatted = annualLoss.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
       document.getElementById('cost').textContent = formatted;
     }
