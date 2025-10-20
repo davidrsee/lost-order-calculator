@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lost Order Cost Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background: #ffffff;
+    }
+    h1 {
+      text-align: center;
+    }
+    .slider-group {
+      margin-bottom: 1.5em;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.3em;
+      font-weight: bold;
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+    .value {
+      font-weight: bold;
+      margin-left: 0.5em;
+    }
+    #result {
+      font-size: 1.2em;
+      margin-top: 2em;
+      text-align: center;
+      background: #fff;
+      padding: 1em;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Lost Order Cost Calculator</h1>
+
+  <div class="slider-group">
+    <label>Average Ticket Size ($): <span class="value" id="ticketVal">15</span></label>
+    <input type="range" id="ticket" min="1" max="100" value="15" />
+  </div>
+
+  <div class="slider-group">
+    <label>Hourly Wage for Staff ($): <span class="value" id="wageVal">15</span></label>
+    <input type="range" id="wage" min="10" max="50" value="15" />
+  </div>
+
+  <div class="slider-group">
+    <label>Order Remake Time (minutes): <span class="value" id="remakeVal">5</span></label>
+    <input type="range" id="remake" min="1" max="30" value="5" />
+  </div>
+
+  <div class="slider-group">
+    <label>Lost Orders per Day: <span class="value" id="lostVal">3</span></label>
+    <input type="range" id="lost" min="0" max="50" value="3" />
+  </div>
+
+  <div class="slider-group">
+    <label>Number of Stores: <span class="value" id="storesVal">10</span></label>
+    <input type="range" id="stores" min="1" max="500" value="10" />
+  </div>
+
+  <div id="result">Annual Cost of Lost Orders: <span id="cost">$0.00</span></div>
+
+  <script>
+    const inputs = ['ticket', 'wage', 'remake', 'lost', 'stores'];
+    const values = {
+      ticket: 15,
+      wage: 15,
+      remake: 5,
+      lost: 3,
+      stores: 10
+    };
+
+    function updateValues() {
+      inputs.forEach(id => {
+        values[id] = parseFloat(document.getElementById(id).value);
+        document.getElementById(id + 'Val').textContent = values[id];
+      });
+      calculateCost();
+    }
+
+    function calculateCost() {
+      const remakeCost = (values.wage / 60) * values.remake;
+      const dailyLoss = (values.ticket + remakeCost) * values.lost;
+      const annualLoss = dailyLoss * 365 * values.stores;
+      const formatted = annualLoss.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+      document.getElementById('cost').textContent = formatted;
+    }
+
+    inputs.forEach(id => {
+      document.getElementById(id).addEventListener('input', updateValues);
+    });
+
+    updateValues(); // Initial calculation
+  </script>
+</body>
+</html>
